@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.base import TemplateResponseMixin 
 from django.urls import reverse 
 from django.views import generic
 from django.utils import timezone 
 
-from .models import Question 
+from .models import Question, Choice
 
 
 def index(request):
@@ -48,9 +49,33 @@ def results(request, question_id):
     return render(request, 'polls/results.html', {'question': question})
 
 
-class ResultsView(generic.DetailView):
-    model = Question
+class ResultsView(TemplateResponseMixin, generic.View):
     template_name = 'polls/results.html'
+
+    def get_queryset(self, question_id):
+        return Question.objects.get(pk=question_id)
+
+    def get(self, request, pk):
+        queryset = self.get_queryset(pk) 
+        context = {'question': queryset}
+        return self.render_to_response(context)
+
+
+class VoteView(generic.View):
+    def get_queryset(self, choice_id):
+        return Choice.objects.get(pk=choice_id) 
+
+    def post(self, request, question_id):
+        print('post')
+        choice_id = request.POST.get('choice', None) 
+        try:
+            queryset = self.get_queryset(choice_id)
+        except (KeyError, Choice.DoesNotExist):
+            return redirect('polls:detail', pk=question_id)
+        else:
+            queryset.votes += 1
+            queryset.save()
+            return redirect('polls:results', pk=question_id) 
 
 
 def vote(request, question_id):
