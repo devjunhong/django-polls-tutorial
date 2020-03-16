@@ -75,7 +75,7 @@ class VoteView(generic.View):
         else:
             queryset.votes += 1
             queryset.save()
-            return redirect('polls:results', pk=question_id) 
+            return redirect('polls:vote_results', pk=question_id) 
 
 
 def vote(request, question_id):
@@ -94,5 +94,14 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing 
         # with POST data. This prevents data from being posted twice if a 
         # user hits the Back button. 
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:vote_results', args=(question.id,)))
 
+
+class SwitchboardView(generic.View):
+    def get(self, request, pk):
+        view = ResultsView.as_view()
+        return view(request, pk)
+
+    def post(self, request, pk):
+        view = VoteView.as_view()
+        return view(request, pk)
