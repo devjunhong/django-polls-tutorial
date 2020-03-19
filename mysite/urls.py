@@ -24,10 +24,9 @@ from polls import api_views
 router = routers.DefaultRouter() 
 router.register(r'question', api_views.QuestionViewSet)
 router.register(r'choice', api_views.ChoiceViewSet) 
+router.register(r'custom_question', api_views.CustomQuestionView, basename='poll')
 
 urlpatterns = [
-    # path(r'^accounts/login/$', views.login, name='login'),
-    # path(r'^accounts/logout/$', views.logout, name='logout'),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
