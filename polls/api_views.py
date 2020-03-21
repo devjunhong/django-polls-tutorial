@@ -3,6 +3,7 @@ from rest_framework import viewsets
 
 from .models import Question, Choice
 from .serializers import QuestionSerializer, ChoiceSerializer
+from .api_authentication import AdminOnlyAuth
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
