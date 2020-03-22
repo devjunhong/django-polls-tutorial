@@ -26,7 +26,7 @@ class Query(graphene.ObjectType):
     all_questions = graphene.List(QuestionType)
     question = graphene.Field(QuestionType, id=graphene.Int())
 
-    def resolve_all_question(self, info):
+    def resolve_all_questions(self, info):
         return Question.objects.all()
 
     def resolve_question(self, info, **kwargs):
