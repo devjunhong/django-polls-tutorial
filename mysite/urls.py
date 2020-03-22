@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
 from rest_framework import routers 
+from graphene_django.views import GraphQLView 
 
 from polls import api_views
 
@@ -30,5 +31,6 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    path('graphql', GraphQLView.as_view(graphiql=True)),
 ]

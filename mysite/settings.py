@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'polls.apps.PollsConfig',
     'rest_framework',
+    'graphene',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -128,4 +130,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'polls.api_authentication.AdminOnlyAuth',
     )
+}
+
+GRAPHENE = {
+    'SCHEMA': 'polls.schema.schema'
 }
