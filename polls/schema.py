@@ -5,6 +5,7 @@ from .models import Choice
 from .types import QuestionType
 from .types import ChoiceType
 from .types import CustomType
+from .mutations import MyMutations
 
 
 class Query(graphene.ObjectType):
@@ -35,4 +36,4 @@ class Query(graphene.ObjectType):
         return None
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=MyMutations)
