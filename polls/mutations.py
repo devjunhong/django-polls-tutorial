@@ -23,4 +23,4 @@ class CreateQuestion(graphene.Mutation):
 
 class MyMutations(graphene.ObjectType):
     create_question = CreateQuestion.Field() 
-    
+

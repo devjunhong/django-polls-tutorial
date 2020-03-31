@@ -66,7 +66,6 @@ class VoteView(generic.View):
         return Choice.objects.get(pk=choice_id) 
 
     def post(self, request, question_id):
-        print('post')
         choice_id = request.POST.get('choice', None) 
         try:
             queryset = self.get_queryset(choice_id)
